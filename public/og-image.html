@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1200" />
+  <title>OG Image — 바이브 코딩 입문 안내서</title>
+
+  <!--
+  ┌──────────────────────────────────────────────────────────────┐
+  │  OG IMAGE — Vibe Coding                                      │
+  │  Size        : 1200 × 630 px                                 │
+  │                                                              │
+  │  Colors ─────────────────────────────────────────────────    │
+  │    --brand-green : #18E299                                   │
+  │    --near-black  : #0d0d0d                                   │
+  │    --pure-white  : #ffffff                                   │
+  │    --subtitle    : #666666                                   │
+  │                                                              │
+  │  Typography ──────────────────────────────────────────────   │
+  │    Headline : Inter 600, -1.28px letter-spacing              │
+  │    Body     : Inter 400                                      │
+  │    Label    : Geist Mono (fallback: monospace)               │
+  │                                                              │
+  │  Layout      : centered, generous padding                    │
+  └──────────────────────────────────────────────────────────────┘
+  -->
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ── Design tokens ─────────────────────────────────────── */
+    :root {
+      --brand-green : #18E299;
+      --near-black  : #0d0d0d;
+      --pure-white  : #ffffff;
+      --subtitle    : #666666;
+
+      --badge-bg    : var(--brand-green);
+      --badge-color : var(--pure-white);
+      --badge-font  : 'Geist Mono', 'JetBrains Mono', 'Courier New', monospace;
+
+      --headline-font   : 'Inter', sans-serif;
+      --headline-size   : 64px;
+      --headline-weight : 600;
+      --headline-spacing: -1.28px;
+
+      --subtitle-size   : 24px;
+      --subtitle-weight : 400;
+
+      /* Canvas */
+      --canvas-w : 1200px;
+      --canvas-h : 630px;
+
+      /* Atmosphere */
+      --glow-color-1 : rgba(24, 226, 153, 0.18);   /* Brand Green soft */
+      --glow-color-2 : rgba(24, 226, 153, 0.07);
+      --glow-color-3 : rgba(24, 226, 153, 0.0);
+
+      /* Padding */
+      --pad-x : 96px;
+      --pad-y : 88px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width : var(--canvas-w);
+      height: var(--canvas-h);
+      overflow: hidden;
+      background: var(--pure-white);
+      font-family: var(--headline-font);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Atmospheric background ────────────────────────────── */
+    .canvas {
+      position: relative;
+      width : var(--canvas-w);
+      height: var(--canvas-h);
+      background: var(--pure-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Soft cloud-like green glow — top-left */
+    .glow-tl {
+      position: absolute;
+      top: -120px;
+      left: -80px;
+      width: 560px;
+      height: 420px;
+      background: radial-gradient(
+        ellipse at 40% 40%,
+        var(--glow-color-1) 0%,
+        var(--glow-color-2) 45%,
+        var(--glow-color-3) 100%
+      );
+      filter: blur(48px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Soft cloud-like green glow — bottom-right */
+    .glow-br {
+      position: absolute;
+      bottom: -100px;
+      right: -60px;
+      width: 480px;
+      height: 360px;
+      background: radial-gradient(
+        ellipse at 60% 60%,
+        var(--glow-color-1) 0%,
+        var(--glow-color-2) 50%,
+        var(--glow-color-3) 100%
+      );
+      filter: blur(56px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Very faint center bloom */
+    .glow-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 700px;
+      height: 340px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(24, 226, 153, 0.055) 0%,
+        rgba(24, 226, 153, 0.0)  70%
+      );
+      filter: blur(32px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ── Content wrapper ───────────────────────────────────── */
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--pad-y) var(--pad-x);
+      gap: 0;
+      max-width: 100%;
+    }
+
+    /* ── Badge ─────────────────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--badge-bg);
+      color: var(--badge-color);
+      font-family: var(--badge-font);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 9999px;        /* pill */
+      margin-bottom: 40px;
+      line-height: 1;
+    }
+
+    /* ── Headline ──────────────────────────────────────────── */
+    .headline {
+      font-family: var(--headline-font);
+      font-size: var(--headline-size);
+      font-weight: var(--headline-weight);
+      letter-spacing: var(--headline-spacing);
+      color: var(--near-black);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      word-break: keep-all;
+    }
+
+    /* ── Subtitle ──────────────────────────────────────────── */
+    .subtitle {
+      font-family: var(--headline-font);
+      font-size: var(--subtitle-size);
+      font-weight: var(--subtitle-weight);
+      color: var(--subtitle);
+      line-height: 1.5;
+      max-width: 720px;
+    }
+
+    /* ── Brand mark (bottom) ───────────────────────────────── */
+    .brand-mark {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: var(--brand-green);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-family: var(--badge-font);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      color: var(--near-black);
+      opacity: 0.35;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+
+    <!-- Atmospheric background layers -->
+    <div class="glow-tl"></div>
+    <div class="glow-br"></div>
+    <div class="glow-center"></div>
+
+    <!-- Main content -->
+    <div class="content">
+      <!-- Badge -->
+      <span class="badge">Documentation</span>
+
+      <!-- Main title -->
+      <h1 class="headline">바이브 코딩 입문 안내서</h1>
+
+      <!-- Subtitle -->
+      <p class="subtitle">AI와 함께하는 새로운 코딩 패러다임의 시작</p>
+    </div>
+
+    <!-- Brand watermark -->
+    <div class="brand-mark">
+      <div class="brand-dot"></div>
+      <span class="brand-name">Vibe Coding</span>
+    </div>
+
+  </div>
+</body>
+</html>
