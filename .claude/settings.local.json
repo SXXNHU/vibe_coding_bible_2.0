@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173 2>/dev/null || echo \"NOT_RUNNING\")",
+      "Bash(netstat -ano | grep -E \":\\(5173|3000|3001|4000|8080|8000\\)\" | grep LISTENING)",
+      "Bash(taskkill /PID 27220 /F)",
+      "Bash(cmd //c \"taskkill /PID 27220 /F\")",
+      "Bash(sleep 3 && curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)"
+    ]
+  }
+}
