@@ -7,6 +7,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root {
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface2: #f5f5f5;
+    --border: rgba(0,0,0,0.05);
+    --border2: rgba(0,0,0,0.08);
+    --text: #0d0d0d;
+    --muted: #888888;
+    --accent: #8a6200;
+    --accent2: #006b87;
+    --green: #0e7a3e;
+    --pink: #b52e6b;
+    --code-bg: #f5f5f5;
+    --nav-bg: rgba(255,255,255,0.94);
+    --text-body: rgba(13,13,13,0.68);
+    --text-desc: rgba(13,13,13,0.60);
+    --eyebrow-bg: rgba(138,98,0,0.08);
+    --eyebrow-border: rgba(138,98,0,0.20);
+    --step-bg: rgba(138,98,0,0.08);
+    --step-border: rgba(138,98,0,0.20);
+    --pre-color: rgba(13,13,13,0.85);
+    --prompt-color: rgba(13,13,13,0.82);
+    --compare-text: rgba(13,13,13,0.70);
+    --bad-bg: rgba(181,46,107,0.06);
+    --bad-border: rgba(181,46,107,0.18);
+    --good-bg: rgba(14,122,62,0.06);
+    --good-border: rgba(14,122,62,0.18);
+    --tip-bg: rgba(138,98,0,0.05);
+    --tip-color: rgba(13,13,13,0.75);
+    --flow-step-bg: rgba(138,98,0,0.08);
+    --checklist-color: rgba(13,13,13,0.68);
+  }
+  [data-theme="dark"] {
     --bg: #0d0d0f;
     --surface: #16161a;
     --surface2: #1e1e24;
@@ -19,6 +51,24 @@
     --green: #6ae89a;
     --pink: #e86a8c;
     --code-bg: #111115;
+    --nav-bg: rgba(13,13,15,0.94);
+    --text-body: rgba(240,237,232,0.68);
+    --text-desc: rgba(240,237,232,0.60);
+    --eyebrow-bg: rgba(232,201,106,0.10);
+    --eyebrow-border: rgba(232,201,106,0.25);
+    --step-bg: rgba(232,201,106,0.12);
+    --step-border: rgba(232,201,106,0.30);
+    --pre-color: rgba(240,237,232,0.85);
+    --prompt-color: rgba(240,237,232,0.82);
+    --compare-text: rgba(240,237,232,0.70);
+    --bad-bg: rgba(232,106,140,0.08);
+    --bad-border: rgba(232,106,140,0.20);
+    --good-bg: rgba(106,232,154,0.08);
+    --good-border: rgba(106,232,154,0.20);
+    --tip-bg: rgba(232,201,106,0.06);
+    --tip-color: rgba(240,237,232,0.75);
+    --flow-step-bg: rgba(232,201,106,0.10);
+    --checklist-color: rgba(240,237,232,0.68);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -32,7 +82,7 @@
 
   .nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(13,13,15,0.94);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 0 2rem;
@@ -47,8 +97,8 @@
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
   .nav-badge {
-    background: rgba(232,201,106,0.12);
-    border: 1px solid rgba(232,201,106,0.3);
+    background: var(--eyebrow-bg);
+    border: 1px solid var(--eyebrow-border);
     color: var(--accent);
     font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 10px; border-radius: 20px;
@@ -60,8 +110,8 @@
   }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(232,201,106,0.1);
-    border: 1px solid rgba(232,201,106,0.25);
+    background: var(--eyebrow-bg);
+    border: 1px solid var(--eyebrow-border);
     color: var(--accent);
     font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     padding: 5px 14px; border-radius: 20px; margin-bottom: 2rem;
@@ -73,7 +123,7 @@
     line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem;
   }
   h1 .hl { color: var(--accent); }
-  .hero-desc { font-size: 1.05rem; color: rgba(240,237,232,0.6); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.85; }
+  .hero-desc { font-size: 1.05rem; color: var(--text-desc); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.85; }
   .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
   .tag {
     background: var(--surface); border: 1px solid var(--border2);
@@ -90,7 +140,7 @@
   }
   h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; margin-bottom: 1.25rem; }
   h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
-  p { color: rgba(240,237,232,0.68); margin-bottom: 1rem; }
+  p { color: var(--text-body); margin-bottom: 1rem; }
 
   .divider { border: none; border-top: 1px solid var(--border); margin: 3.5rem 0; }
 
@@ -136,7 +186,7 @@
   pre {
     padding: 1.25rem 1.5rem; overflow-x: auto;
     font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
-    line-height: 1.7; color: rgba(240,237,232,0.85);
+    line-height: 1.7; color: var(--pre-color);
   }
   .cmd { color: var(--accent2); }
   .comment { color: var(--muted); }
@@ -146,7 +196,7 @@
   .step-item { display: flex; gap: 1rem; align-items: flex-start; }
   .step-num {
     flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
-    background: rgba(232,201,106,0.12); border: 1px solid rgba(232,201,106,0.3);
+    background: var(--step-bg); border: 1px solid var(--step-border);
     color: var(--accent); font-size: 0.75rem; font-weight: 700;
     display: flex; align-items: center; justify-content: center; margin-top: 2px;
   }
@@ -170,14 +220,14 @@
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--accent); border-radius: 20px;
   }
-  .prompt-text { font-size: 0.88rem; line-height: 1.85; color: rgba(240,237,232,0.82); }
+  .prompt-text { font-size: 0.88rem; line-height: 1.85; color: var(--prompt-color); }
   .prompt-text strong { color: var(--accent); font-weight: 700; }
   .prompt-text em { color: var(--accent2); font-style: normal; }
 
   .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
   .compare-bad, .compare-good { padding: 1rem 1.25rem; border-radius: 10px; font-size: 0.85rem; line-height: 1.7; }
-  .compare-bad { background: rgba(232,106,140,0.08); border: 1px solid rgba(232,106,140,0.2); color: rgba(240,237,232,0.7); }
-  .compare-good { background: rgba(106,232,154,0.08); border: 1px solid rgba(106,232,154,0.2); color: rgba(240,237,232,0.7); }
+  .compare-bad { background: var(--bad-bg); border: 1px solid var(--bad-border); color: var(--compare-text); }
+  .compare-good { background: var(--good-bg); border: 1px solid var(--good-border); color: var(--compare-text); }
   .compare-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
   .compare-bad .compare-label { color: var(--pink); }
   .compare-good .compare-label { color: var(--green); }
@@ -187,7 +237,7 @@
   .flow-item:last-child { border-bottom: none; }
   .flow-step-num {
     width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px;
-    background: rgba(232,201,106,0.1); color: var(--accent);
+    background: var(--flow-step-bg); color: var(--accent);
     font-size: 0.7rem; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     font-family: 'JetBrains Mono', monospace;
@@ -196,13 +246,13 @@
   .flow-content span { color: var(--muted); font-size: 0.8rem; }
 
   .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
-  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: rgba(240,237,232,0.68); }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--checklist-color); }
   .checklist li::before { content: '✓'; color: var(--accent); flex-shrink: 0; margin-top: 1px; font-size: 0.85rem; font-weight: 700; }
 
   .tip-box {
-    background: rgba(232,201,106,0.06); border: 1px solid rgba(232,201,106,0.2);
+    background: var(--tip-bg); border: 1px solid var(--eyebrow-border);
     border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
-    font-size: 0.86rem; color: rgba(240,237,232,0.75);
+    font-size: 0.86rem; color: var(--tip-color);
   }
   .tip-box strong { color: var(--accent); }
 
@@ -225,6 +275,21 @@
   }
   .btn-next:hover { opacity: 0.85; }
 
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+    flex-shrink: 0; line-height: 1;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--border2); }
+  .nav-end { display: flex; align-items: center; gap: 0.75rem; }
+
   @media (max-width: 600px) {
     .hero { padding: 4rem 1.25rem 2.5rem; }
     .content { padding: 0 1.25rem 4rem; }
@@ -232,6 +297,7 @@
     h1 { font-size: 2.5rem; }
   }
 </style>
+<script>(function(){var t=localStorage.getItem('vibe-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
 </head>
 <body>
 
@@ -243,7 +309,10 @@
     <li><a href="#dev">개발하기</a></li>
     <li><a href="#deploy">배포</a></li>
   </ul>
-  <span class="nav-badge">무료 트랙</span>
+  <div class="nav-end">
+    <span class="nav-badge">무료 트랙</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -788,5 +857,18 @@
   <a href="vibe-coding-paid.html" class="btn-next">다음: 유료 사용자 트랙 →</a>
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var btn=document.getElementById('themeToggle');
+  function sync(){var d=document.documentElement.getAttribute('data-theme')==='dark';btn.textContent=d?'☀':'🌙';}
+  sync();
+  btn.addEventListener('click',function(){
+    var d=document.documentElement.getAttribute('data-theme')==='dark';
+    if(d){document.documentElement.removeAttribute('data-theme');localStorage.setItem('vibe-theme','light');}
+    else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('vibe-theme','dark');}
+    sync();
+  });
+});
+</script>
 </body>
 </html>
