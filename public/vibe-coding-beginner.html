@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>바이브코딩 입문 — 무료 사용자 트랙</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface2: #f5f5f5;
+    --border: rgba(0,0,0,0.05);
+    --border2: rgba(0,0,0,0.08);
+    --text: #0d0d0d;
+    --muted: #888888;
+    --accent: #8a6200;
+    --accent2: #006b87;
+    --green: #0e7a3e;
+    --pink: #b52e6b;
+    --code-bg: #f5f5f5;
+    --nav-bg: rgba(255,255,255,0.94);
+    --text-body: rgba(13,13,13,0.68);
+    --text-desc: rgba(13,13,13,0.60);
+    --eyebrow-bg: rgba(138,98,0,0.08);
+    --eyebrow-border: rgba(138,98,0,0.20);
+    --step-bg: rgba(138,98,0,0.08);
+    --step-border: rgba(138,98,0,0.20);
+    --pre-color: rgba(13,13,13,0.85);
+    --prompt-color: rgba(13,13,13,0.82);
+    --compare-text: rgba(13,13,13,0.70);
+    --bad-bg: rgba(181,46,107,0.06);
+    --bad-border: rgba(181,46,107,0.18);
+    --good-bg: rgba(14,122,62,0.06);
+    --good-border: rgba(14,122,62,0.18);
+    --tip-bg: rgba(138,98,0,0.05);
+    --tip-color: rgba(13,13,13,0.75);
+    --flow-step-bg: rgba(138,98,0,0.08);
+    --checklist-color: rgba(13,13,13,0.68);
+  }
+  [data-theme="dark"] {
+    --bg: #0d0d0f;
+    --surface: #16161a;
+    --surface2: #1e1e24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #f0ede8;
+    --muted: #888785;
+    --accent: #e8c96a;
+    --accent2: #6ad4e8;
+    --green: #6ae89a;
+    --pink: #e86a8c;
+    --code-bg: #111115;
+    --nav-bg: rgba(13,13,15,0.94);
+    --text-body: rgba(240,237,232,0.68);
+    --text-desc: rgba(240,237,232,0.60);
+    --eyebrow-bg: rgba(232,201,106,0.10);
+    --eyebrow-border: rgba(232,201,106,0.25);
+    --step-bg: rgba(232,201,106,0.12);
+    --step-border: rgba(232,201,106,0.30);
+    --pre-color: rgba(240,237,232,0.85);
+    --prompt-color: rgba(240,237,232,0.82);
+    --compare-text: rgba(240,237,232,0.70);
+    --bad-bg: rgba(232,106,140,0.08);
+    --bad-border: rgba(232,106,140,0.20);
+    --good-bg: rgba(106,232,154,0.08);
+    --good-border: rgba(106,232,154,0.20);
+    --tip-bg: rgba(232,201,106,0.06);
+    --tip-color: rgba(240,237,232,0.75);
+    --flow-step-bg: rgba(232,201,106,0.10);
+    --checklist-color: rgba(240,237,232,0.68);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: 0.1em; color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-badge {
+    background: var(--eyebrow-bg);
+    border: 1px solid var(--eyebrow-border);
+    color: var(--accent);
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  .hero {
+    padding: 6rem 2rem 4rem;
+    max-width: 860px; margin: 0 auto;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--eyebrow-bg);
+    border: 1px solid var(--eyebrow-border);
+    color: var(--accent);
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 2rem;
+  }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem;
+  }
+  h1 .hl { color: var(--accent); }
+  .hero-desc { font-size: 1.05rem; color: var(--text-desc); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.85; }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: var(--surface); border: 1px solid var(--border2);
+    color: var(--muted); font-size: 0.78rem; padding: 5px 12px;
+    border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+  }
+
+  .content { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  .section { margin-bottom: 4rem; padding-top: 1rem; }
+  .section-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; margin-bottom: 1.25rem; }
+  h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
+  p { color: var(--text-body); margin-bottom: 1rem; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 3.5rem 0; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  }
+  .callout.info { border-left-color: var(--accent2); }
+  .callout.warn { border-left-color: var(--pink); }
+  .callout.success { border-left-color: var(--green); }
+  .callout p { margin: 0; font-size: 0.9rem; }
+  .callout strong { color: var(--text); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .card { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 1.25rem; }
+  .card-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; margin-bottom: 0.75rem;
+  }
+  .card-icon.yellow { background: rgba(232,201,106,0.15); }
+  .card-icon.blue { background: rgba(106,212,232,0.15); }
+  .card-icon.pink { background: rgba(232,106,140,0.15); }
+  .card-icon.green { background: rgba(106,232,154,0.15); }
+  .card h3 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .card p { font-size: 0.82rem; margin: 0; }
+
+  .code-block {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin: 1.25rem 0;
+  }
+  .code-header {
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .code-lang { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .code-dots { display: flex; gap: 5px; }
+  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .code-dots span:nth-child(1) { background: #ff5f57; }
+  .code-dots span:nth-child(2) { background: #febc2e; }
+  .code-dots span:nth-child(3) { background: #28c840; }
+  pre {
+    padding: 1.25rem 1.5rem; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+    line-height: 1.7; color: var(--pre-color);
+  }
+  .cmd { color: var(--accent2); }
+  .comment { color: var(--muted); }
+  .str { color: var(--accent); }
+
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin: 1.5rem 0; }
+  .step-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--step-bg); border: 1px solid var(--step-border);
+    color: var(--accent); font-size: 0.75rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .step-body { flex: 1; }
+  .step-body strong { color: var(--text); display: block; margin-bottom: 0.25rem; font-size: 0.93rem; }
+  .step-body p { font-size: 0.85rem; margin: 0.25rem 0 0; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+    background: var(--code-bg); padding: 2px 7px; border-radius: 4px; color: var(--accent2);
+  }
+
+  .prompt-block {
+    background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; position: relative;
+  }
+  .prompt-label {
+    position: absolute; top: -10px; left: 16px;
+    background: var(--surface2); border: 1px solid var(--border2);
+    padding: 1px 10px; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); border-radius: 20px;
+  }
+  .prompt-text { font-size: 0.88rem; line-height: 1.85; color: var(--prompt-color); }
+  .prompt-text strong { color: var(--accent); font-weight: 700; }
+  .prompt-text em { color: var(--accent2); font-style: normal; }
+
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .compare-bad, .compare-good { padding: 1rem 1.25rem; border-radius: 10px; font-size: 0.85rem; line-height: 1.7; }
+  .compare-bad { background: var(--bad-bg); border: 1px solid var(--bad-border); color: var(--compare-text); }
+  .compare-good { background: var(--good-bg); border: 1px solid var(--good-border); color: var(--compare-text); }
+  .compare-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .compare-bad .compare-label { color: var(--pink); }
+  .compare-good .compare-label { color: var(--green); }
+
+  .flow { display: flex; flex-direction: column; gap: 0; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .flow-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-step-num {
+    width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px;
+    background: var(--flow-step-bg); color: var(--accent);
+    font-size: 0.7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .flow-content strong { color: var(--text); font-size: 0.9rem; display: block; }
+  .flow-content span { color: var(--muted); font-size: 0.8rem; }
+
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--checklist-color); }
+  .checklist li::before { content: '✓'; color: var(--accent); flex-shrink: 0; margin-top: 1px; font-size: 0.85rem; font-weight: 700; }
+
+  .tip-box {
+    background: var(--tip-bg); border: 1px solid var(--eyebrow-border);
+    border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0;
+    font-size: 0.86rem; color: var(--tip-color);
+  }
+  .tip-box strong { color: var(--accent); }
+
+  .bottom-nav {
+    max-width: 860px; margin: 0 auto; padding: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--border2);
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    padding: 12px 24px; border-radius: 8px; transition: color 0.2s;
+  }
+  .btn-back:hover { color: var(--text); }
+  .btn-next {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #0d0d0f;
+    text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    padding: 12px 24px; border-radius: 8px; transition: opacity 0.2s;
+  }
+  .btn-next:hover { opacity: 0.85; }
+
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+    flex-shrink: 0; line-height: 1;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--border2); }
+  .nav-end { display: flex; align-items: center; gap: 0.75rem; }
+
+  @media (max-width: 600px) {
+    .hero { padding: 4rem 1.25rem 2.5rem; }
+    .content { padding: 0 1.25rem 4rem; }
+    .compare-row { grid-template-columns: 1fr; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
+<script>(function(){var t=localStorage.getItem('vibe-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="vibe-coding-index.html" class="nav-brand" style="text-decoration:none;">VIBE CODING</a>
+  <ul class="nav-links">
+    <li><a href="#setup">환경설정</a></li>
+    <li><a href="#project">프로젝트</a></li>
+    <li><a href="#dev">개발하기</a></li>
+    <li><a href="#deploy">배포</a></li>
+  </ul>
+  <div class="nav-end">
+    <span class="nav-badge">무료 트랙</span>
+    <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Track 01 — 무료 사용자</div>
+  <h1>채팅으로<br><span class="hl">앱 만들기</span></h1>
+  <p class="hero-desc">
+    ChatGPT나 Claude 무료 버전으로도 충분히 웹 앱을 만들 수 있어요.
+    AI가 써준 코드를 복사해서 붙여넣는 방식이지만, 처음 배우기엔 오히려 더 좋습니다.
+    코드 구조를 눈으로 직접 확인하면서 배울 수 있거든요.
+  </p>
+  <div class="hero-tags">
+    <span class="tag">ChatGPT Free</span>
+    <span class="tag">Claude Web</span>
+    <span class="tag">VS Code</span>
+    <span class="tag">Vite + React</span>
+    <span class="tag">GitHub</span>
+    <span class="tag">Vercel</span>
+  </div>
+</section>
+
+<main class="content">
+
+  <!-- 전체 흐름 -->
+  <section class="section" id="flow">
+    <div class="section-label">전체 흐름 이해</div>
+    <h2>무료 트랙에서는 이렇게 해요</h2>
+    <p>유료 도구는 AI가 내 파일을 직접 열어서 고쳐줍니다. 무료 트랙에서는 내가 중간 역할을 합니다. AI에게 코드를 받아서, 내가 파일에 붙여넣는 방식이에요.</p>
+
+    <div class="flow">
+      <div class="flow-item">
+        <div class="flow-step-num">01</div>
+        <div class="flow-content">
+          <strong>AI 채팅창에서 기능 요청</strong>
+          <span>ChatGPT나 Claude 웹사이트에서 원하는 기능을 설명합니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">02</div>
+        <div class="flow-content">
+          <strong>AI가 코드를 작성해서 응답</strong>
+          <span>코드 블록(회색 박스)으로 완성된 코드가 나옵니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">03</div>
+        <div class="flow-content">
+          <strong>VS Code 해당 파일에 붙여넣기</strong>
+          <span>AI가 알려주는 파일(예: App.jsx)을 열고 전체 내용을 교체합니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">04</div>
+        <div class="flow-content">
+          <strong>브라우저에서 결과 확인</strong>
+          <span>npm run dev로 켜둔 창에서 자동으로 변경사항이 반영됩니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">05</div>
+        <div class="flow-content">
+          <strong>잘 안 되면 오류 메시지를 AI에게 전달</strong>
+          <span>브라우저 콘솔의 빨간 오류를 그대로 복사해서 AI에게 붙여넣습니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">06</div>
+        <div class="flow-content">
+          <strong>완성되면 GitHub → Vercel 배포</strong>
+          <span>실제 인터넷 주소로 친구들과 공유할 수 있게 됩니다</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <p><strong>오히려 장점이 있어요:</strong> AI가 직접 파일을 고쳐주면 뭘 바꿨는지 놓치기 쉽습니다. 무료 방식은 코드를 직접 눈으로 보면서 붙여넣기 때문에, 구조를 자연스럽게 익히게 됩니다. 입문자에게는 오히려 더 좋은 방식일 수 있어요.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 환경 설정 -->
+  <section class="section" id="setup">
+    <div class="section-label">Step 1 — 환경 설정</div>
+    <h2>처음 한 번만 설치하면 끝</h2>
+    <p>아래 도구들을 설치하면 개발 환경 준비가 완료됩니다. 한 번 설치하면 앞으로 모든 프로젝트에서 계속 쓸 수 있어요.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon yellow">🤖</div>
+        <h3>AI 채팅 도구</h3>
+        <p>ChatGPT, Claude, Gemini 중 하나. 브라우저에서 사용하니 별도 설치 없이 계정만 만들면 됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">📝</div>
+        <h3>VS Code</h3>
+        <p>코드를 보고 편집하는 프로그램. <strong style="color:var(--text)">code.visualstudio.com</strong>에서 무료로 다운로드합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon pink">⚙️</div>
+        <h3>Node.js</h3>
+        <p>React 프로젝트를 실행하는 데 필요한 프로그램. <strong style="color:var(--text)">nodejs.org</strong>에서 LTS 버전을 설치합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">🌐</div>
+        <h3>GitHub + Vercel</h3>
+        <p>코드 저장(GitHub)과 인터넷 배포(Vercel). 둘 다 무료 계정으로 충분합니다.</p>
+      </div>
+    </div>
+
+    <h3>설치 확인하기</h3>
+    <p>VS Code를 열고, 상단 메뉴 → 터미널 → 새 터미널을 클릭하세요. 검은 창이 뜨면 아래 명령어를 입력해서 Node.js가 제대로 설치됐는지 확인합니다.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">Terminal (VS Code 내장)</span>
+      </div>
+      <pre><span class="cmd">node</span> -v   <span class="comment"># v20.x.x 같은 숫자가 나오면 OK</span>
+<span class="cmd">npm</span> -v    <span class="comment"># 9.x.x 같은 숫자가 나오면 OK</span></pre>
+    </div>
+
+    <div class="callout">
+      <p><strong>터미널이 처음이라면:</strong> VS Code에서 <code>Ctrl + `</code> (백틱, 숫자 1 왼쪽 키)를 누르면 터미널이 열립니다. 명령어를 입력하고 Enter를 누르면 실행됩니다.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 프로젝트 생성 -->
+  <section class="section" id="project">
+    <div class="section-label">Step 2 — 프로젝트 생성</div>
+    <h2>첫 프로젝트 만들기</h2>
+    <p>이제 실제 프로젝트를 만들어봅시다. VS Code 터미널에서 아래 명령어를 순서대로 입력하세요. 처음엔 낯설지만 금방 익숙해집니다.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">Terminal — 프로젝트 생성</span>
+      </div>
+      <pre><span class="comment"># 1. 원하는 위치로 이동 (예: 바탕화면)</span>
+<span class="cmd">cd</span> Desktop
+
+<span class="comment"># 2. 프로젝트 폴더 생성</span>
+<span class="comment">#    my-first-app 부분이 프로젝트 이름입니다</span>
+<span class="cmd">npm create vite@latest</span> <span class="str">my-first-app</span>
+
+<span class="comment"># 3. 질문이 나오면 키보드로 선택</span>
+<span class="comment">#    Select a framework:  → React 선택 (방향키로 이동, Enter)</span>
+<span class="comment">#    Select a variant:    → JavaScript 선택 (TypeScript 말고)</span>
+
+<span class="comment"># 4. 만들어진 폴더로 이동</span>
+<span class="cmd">cd</span> my-first-app
+
+<span class="comment"># 5. 필요한 파일들 설치 (잠깐 기다림)</span>
+<span class="cmd">npm install</span>
+
+<span class="comment"># 6. 개발 서버 실행</span>
+<span class="cmd">npm run dev</span></pre>
+    </div>
+
+    <div class="callout success">
+      <p><strong>성공 확인:</strong> <code>http://localhost:5173</code> 주소가 터미널에 나오면 성공입니다. 브라우저에서 그 주소를 열면 Vite + React 로고가 보입니다. 이 창은 계속 켜두세요 — 코드를 바꿀 때마다 자동으로 새로고침됩니다.</p>
+    </div>
+
+    <h3>폴더 구조 이해하기</h3>
+    <p>VS Code에서 방금 만든 폴더를 열면 이런 구조가 보입니다. 처음엔 복잡해 보이지만 실제로 건드릴 파일은 딱 두 곳입니다.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">폴더 구조</span>
+      </div>
+      <pre>my-first-app/
+├── <span class="str">src/</span>
+│   ├── <span class="cmd">App.jsx</span>   <span class="comment">← 여기가 메인! 대부분의 작업은 이 파일</span>
+│   ├── App.css    <span class="comment">← 디자인 (나중에 건드려요)</span>
+│   └── main.jsx   <span class="comment">← 건드리지 않아도 됨</span>
+├── public/        <span class="comment">← 이미지 파일 넣는 곳</span>
+├── index.html
+└── package.json</pre>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 팁:</strong> 처음에는 <code>src/App.jsx</code> 하나만 건드려도 됩니다. AI에게 요청할 때 "App.jsx 파일을 수정해줘"라고 하면, AI가 이 파일의 내용을 통째로 새로 써줍니다.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- AI와 개발하기 -->
+  <section class="section" id="dev">
+    <div class="section-label">Step 3 — AI와 개발하기</div>
+    <h2>AI에게 잘 부탁하는 방법</h2>
+    <p>바이브코딩에서 가장 중요한 스킬은 AI에게 원하는 걸 정확하게 전달하는 것입니다. 막연하게 요청하면 엉뚱한 결과가 나오고, 구체적으로 말할수록 원하는 결과에 가까워집니다.</p>
+
+    <h3>첫 번째 요청 — 이렇게 시작해보세요</h3>
+    <p>ChatGPT나 Claude 채팅창에 아래와 같은 형식으로 요청하면 됩니다.</p>
+
+    <div class="prompt-block">
+      <div class="prompt-label">💬 AI에게 이렇게 요청하기 (예시: 할 일 목록 앱)</div>
+      <div class="prompt-text">
+        나는 React + Vite 프로젝트를 방금 만든 입문자야.<br>
+        <strong>할 일 목록(Todo) 앱</strong>을 만들고 싶어.<br><br>
+
+        기능:<br>
+        - 입력창에 할 일을 입력하고 추가 버튼을 누르면 목록에 추가<br>
+        - 각 항목마다 완료 체크박스와 삭제 버튼<br>
+        - 완료된 항목은 취소선으로 표시<br><br>
+
+        조건:<br>
+        - <strong>src/App.jsx 파일 하나</strong>에 전부 담아줘<br>
+        - CSS는 인라인 스타일로 간단하게 넣어줘<br>
+        - 전체 코드를 한 번에 다 출력해줘<br><br>
+
+        코드를 주고 나서 마지막에:<br>
+        1. 어떤 파일에 붙여넣어야 하는지<br>
+        2. 코드가 어떻게 동작하는지 한 줄 요약<br>
+        을 알려줘.
+      </div>
+    </div>
+
+    <h3>좋은 요청 vs 나쁜 요청</h3>
+    <p>아래 비교를 보면 어떻게 요청해야 할지 감이 잡힐 거예요.</p>
+
+    <div class="compare-row">
+      <div class="compare-bad">
+        <div class="compare-label">❌ 이렇게 하면 결과가 애매해요</div>
+        앱 만들어줘.<br><br>
+        버튼 추가해줘.<br><br>
+        안 되는데 고쳐줘.<br><br>
+        예쁘게 만들어줘.
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ 이렇게 하면 결과가 명확해요</div>
+        React + Vite 프로젝트의 <em>src/App.jsx</em>에 타이머 기능을 추가해줘. 시작/멈춤 버튼이 있고, mm:ss 형식으로 표시돼야 해.<br><br>
+        App.jsx에 파란색(#3b82f6) 버튼을 추가해줘. 클릭하면 "안녕하세요!"라는 alert가 뜨게 해줘.<br><br>
+        아래 오류가 났어: [오류 내용 붙여넣기]. 현재 App.jsx 코드는 이래: [코드 붙여넣기]. 원인을 설명하고 고쳐줘.
+      </div>
+    </div>
+
+    <h3>코드를 받은 다음에는</h3>
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>AI가 알려준 파일을 VS Code에서 엽니다</strong>
+          <p>보통 <code>src/App.jsx</code>입니다. 왼쪽 파일 목록에서 클릭하면 열립니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Ctrl+A로 전체 선택 후 Delete로 삭제</strong>
+          <p>기존 내용을 전부 지웁니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>AI가 준 코드를 Ctrl+V로 붙여넣기</strong>
+          <p>AI 응답의 회색 코드 박스 오른쪽 상단 복사 버튼을 누르면 쉽게 복사됩니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Ctrl+S로 저장</strong>
+          <p>저장하면 브라우저가 자동으로 새로고침되어 변경사항이 보입니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>브라우저에서 확인</strong>
+          <p><code>localhost:5173</code>에서 내가 요청한 기능이 잘 동작하는지 테스트합니다.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <p><strong>꿀팁:</strong> 브라우저와 VS Code를 나란히 배치하면 더 편합니다. 코드를 수정하자마자 바로 결과를 볼 수 있어요. 윈도우 키 + 방향키로 창을 반반 나눌 수 있습니다.</p>
+    </div>
+
+    <h3>기능을 하나씩 추가하기</h3>
+    <p>처음부터 모든 기능을 한 번에 만들려 하지 마세요. 기능 하나를 완성하고 확인한 다음, 그 다음 기능을 요청하는 게 훨씬 안전합니다.</p>
+
+    <div class="prompt-block">
+      <div class="prompt-label">💬 단계별 요청 예시</div>
+      <div class="prompt-text">
+        <strong>[1단계]</strong> 지금까지 만든 App.jsx에서 <em>로컬스토리지 저장 기능</em>을 추가해줘.<br>
+        페이지를 새로고침해도 할 일 목록이 사라지지 않아야 해.<br>
+        현재 App.jsx 코드는 이래: [현재 코드 붙여넣기]<br><br>
+
+        <strong>[2단계]</strong> App.jsx에 <em>필터 탭</em>을 추가해줘.<br>
+        '전체', '진행중', '완료' 탭이 있고, 각 탭을 클릭하면 해당 항목만 보여줘.<br>
+        현재 App.jsx 코드는 이래: [현재 코드 붙여넣기]
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 오류 대처법 -->
+  <section class="section" id="error">
+    <div class="section-label">Step 4 — 오류 대처</div>
+    <h2>오류가 났을 때 당황하지 마세요</h2>
+    <p>개발 중에 오류는 피할 수 없습니다. 중요한 건 오류를 봤을 때 어떻게 AI에게 전달하느냐입니다. "안 돼요"라고 하면 AI도 뭘 고쳐야 할지 모릅니다.</p>
+
+    <h3>오류 메시지 찾는 방법</h3>
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>브라우저에서 F12 키를 누릅니다</strong>
+          <p>개발자 도구가 열립니다. 처음엔 낯설지만 걱정하지 마세요.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>상단에서 "Console" 탭을 클릭합니다</strong>
+          <p>여기에 빨간색 오류 메시지가 표시됩니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>빨간 텍스트를 마우스로 드래그해서 복사합니다</strong>
+          <p>오류 메시지 전체를 선택해서 복사합니다. 짧게 자르지 마세요.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>AI에게 오류 + 현재 코드를 함께 전달합니다</strong>
+          <p>오류만 주면 AI가 현재 코드를 모릅니다. 반드시 코드도 같이 줘야 해요.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="prompt-block">
+      <div class="prompt-label">💬 오류 발생 시 AI에게 이렇게 요청하기</div>
+      <div class="prompt-text">
+        App.jsx를 수정했더니 이런 오류가 났어:<br><br>
+        <strong>오류 메시지:</strong><br>
+        Cannot read properties of undefined (reading 'map')<br>
+        at App (App.jsx:15:18)<br><br>
+
+        <strong>현재 App.jsx 코드:</strong><br>
+        [코드 전체 붙여넣기]<br><br>
+
+        원인이 뭔지 설명해주고, <em>수정된 전체 App.jsx 코드</em>를 다시 써줘.
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>이것만은 하지 마세요:</strong> "오류가 났어요"처럼 오류 메시지 없이 요청하거나, "고쳐줘"만 하면 AI가 원인을 추측해야 해서 엉뚱한 결과가 나올 수 있습니다. 항상 오류 메시지 + 현재 코드를 세트로 전달하세요.</p>
+    </div>
+
+    <h3>흰 화면만 나올 때 (화면이 아무것도 안 보임)</h3>
+    <p>이런 경우는 대부분 코드 문법 오류입니다.</p>
+    <ul class="checklist">
+      <li>브라우저 F12 콘솔에서 빨간 오류를 확인하세요</li>
+      <li>VS Code 터미널에도 오류가 출력되어 있을 수 있습니다</li>
+      <li>오류와 현재 코드를 AI에게 전달하면 대부분 바로 해결됩니다</li>
+      <li>아직 코드 변경을 많이 안 했다면 Ctrl+Z로 되돌려보세요</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GitHub -->
+  <section class="section" id="github">
+    <div class="section-label">Step 5 — GitHub에 올리기</div>
+    <h2>코드를 안전하게 저장하기</h2>
+    <p>GitHub는 코드를 인터넷에 저장하는 공간입니다. 저장된 코드로 Vercel에서 배포도 하고, 실수로 코드를 망쳐도 이전 버전으로 돌아갈 수 있어요.</p>
+
+    <h3>GitHub 계정 & 저장소 만들기</h3>
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>github.com에서 계정을 만듭니다 (이미 있으면 로그인)</strong>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>오른쪽 상단 + 버튼 → New repository 클릭</strong>
+          <p>Repository name에 프로젝트 이름 입력 (예: my-first-app). Public 선택. Create repository 클릭.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>나오는 명령어를 VS Code 터미널에 붙여넣기</strong>
+          <p>GitHub가 안내해주는 "...or push an existing repository" 쪽 명령어들을 순서대로 입력합니다.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">Terminal — GitHub 업로드</span>
+      </div>
+      <pre><span class="comment"># 프로젝트 폴더에서 실행 (npm run dev 중이면 Ctrl+C로 멈추고)</span>
+<span class="cmd">git init</span>
+<span class="cmd">git add</span> .
+<span class="cmd">git commit</span> <span class="str">-m "first commit"</span>
+<span class="cmd">git branch</span> <span class="str">-M main</span>
+<span class="cmd">git remote add origin</span> <span class="str">https://github.com/내계정/내저장소.git</span>
+<span class="cmd">git push</span> <span class="str">-u origin main</span></pre>
+    </div>
+
+    <div class="callout">
+      <p><strong>저장소 주소는 GitHub에서 복사하세요.</strong> 위 명령어에서 <code>https://github.com/내계정/내저장소.git</code> 부분은 GitHub 저장소 만들고 나서 나오는 주소를 복사해 쓰면 됩니다.</p>
+    </div>
+
+    <h3>이후에 수정할 때마다</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">Terminal — 코드 변경 후 저장</span>
+      </div>
+      <pre><span class="cmd">git add</span> .
+<span class="cmd">git commit</span> <span class="str">-m "변경 내용 메모"</span>   <span class="comment">← 예: "할일 삭제 기능 추가"</span>
+<span class="cmd">git push</span>
+<span class="comment"># Vercel이 자동으로 새 버전을 배포해줍니다</span></pre>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Vercel 배포 -->
+  <section class="section" id="deploy">
+    <div class="section-label">Step 6 — 배포하기</div>
+    <h2>실제 인터넷에 올리기</h2>
+    <p>Vercel은 GitHub 저장소를 연결하면 코드가 바뀔 때마다 자동으로 배포해주는 서비스입니다. 무료로 사용할 수 있고, 설정도 아주 간단해요.</p>
+
+    <ol class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>vercel.com 접속 → GitHub 계정으로 로그인</strong>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Add New → Project 클릭</strong>
+          <p>GitHub 저장소 목록이 뜨면 방금 만든 저장소를 Import 합니다.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>설정은 기본값 그대로 → Deploy 클릭</strong>
+          <p>Vite + React 프로젝트는 Vercel이 자동으로 인식합니다. 따로 설정할 게 없어요.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>1~2분 기다리면 배포 완료!</strong>
+          <p><code>내프로젝트.vercel.app</code> 같은 주소가 생깁니다. 이 링크를 공유하면 누구나 볼 수 있어요.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout success">
+      <p><strong>이제부터는:</strong> 코드를 수정하고 <code>git add . && git commit -m "변경사항" && git push</code>만 하면 Vercel이 자동으로 새 버전을 배포합니다. 보통 1~2분이면 최신 버전이 반영됩니다.</p>
+    </div>
+
+    <h3>배포 전 꼭 확인하기</h3>
+    <p>로컬(내 컴퓨터)에서는 잘 되는데 Vercel에서 안 되는 경우가 있습니다. 배포 전에 아래 명령어로 빌드 테스트를 꼭 해보세요.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">Terminal — 배포 전 테스트</span>
+      </div>
+      <pre><span class="comment"># 빌드 테스트 (오류 없이 완료되면 Vercel도 성공)</span>
+<span class="cmd">npm run build</span>
+
+<span class="comment"># 오류가 나면 메시지를 AI에게 전달해서 먼저 해결하세요</span></pre>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 핵심 원칙 -->
+  <section class="section">
+    <div class="section-label">핵심 원칙</div>
+    <h2>무료 트랙 바이브코딩 원칙</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon yellow">🎯</div>
+        <h3>한 번에 하나씩</h3>
+        <p>기능 하나를 완성하고 확인한 후 다음 기능을 요청하세요. 한 번에 10가지를 요청하면 꼬입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">📋</div>
+        <h3>파일 이름을 명시하기</h3>
+        <p>요청할 때 항상 어느 파일을 수정하는지 말해주세요. 대부분은 src/App.jsx입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon pink">🔍</div>
+        <h3>오류는 그대로 전달</h3>
+        <p>"안 돼요"가 아니라 오류 메시지와 현재 코드를 세트로 AI에게 전달하세요.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">✅</div>
+        <h3>만들고 바로 확인</h3>
+        <p>코드를 붙여넣을 때마다 브라우저에서 직접 확인하세요. 나중에 몰아서 확인하면 디버깅이 어렵습니다.</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>이것만은 하지 마세요:</strong> AI가 코드를 줬는데 실행도 안 해보고 바로 Git push하는 것. 반드시 <code>npm run dev</code>로 확인하고, <code>npm run build</code>도 통과시킨 다음에 push하세요.</p>
+    </div>
+
+    <h3>추천 첫 프로젝트</h3>
+    <ul class="checklist">
+      <li>버튼 클릭 시 숫자가 오르는 카운터 앱</li>
+      <li>할 일 목록 (Todo) 앱</li>
+      <li>퀴즈 앱 (문제 내면 O/X 클릭)</li>
+      <li>집중 타이머 앱 (25분 포모도로)</li>
+      <li>동아리 소개 페이지</li>
+    </ul>
+
+    <div class="callout info">
+      <p><strong>기억하세요:</strong> 완벽한 코드를 한 번에 만들려 하지 마세요. AI와 함께 조금씩 고쳐나가는 과정 자체가 바이브코딩입니다. 동작하는 결과물을 빠르게 만드는 게 목표예요.</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="bottom-nav">
+  <a href="vibe-coding-index.html" class="btn-back">← 트랙 선택으로</a>
+  <a href="vibe-coding-intermediate.html" class="btn-next">다음: 유료 사용자 트랙 →</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var btn=document.getElementById('themeToggle');
+  function sync(){var d=document.documentElement.getAttribute('data-theme')==='dark';btn.textContent=d?'☀':'🌙';}
+  sync();
+  btn.addEventListener('click',function(){
+    var d=document.documentElement.getAttribute('data-theme')==='dark';
+    if(d){document.documentElement.removeAttribute('data-theme');localStorage.setItem('vibe-theme','light');}
+    else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('vibe-theme','dark');}
+    sync();
+  });
+});
+</script>
+</body>
+</html>
