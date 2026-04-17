@@ -14,7 +14,7 @@
     --border2: rgba(0,0,0,0.08);
     --text: #0d0d0d;
     --muted: #888888;
-    --accent: #0e7a3e;
+    --accent: #1D9A58;
     --accent2: #0a6b30;
     --accent3: #9a7800;
     --danger: #cc3333;
@@ -80,7 +80,9 @@
     padding: 0 2rem;
     display: flex; align-items: center; justify-content: space-between;
     height: 56px;
+    transition: transform 0.3s ease;
   }
+  .nav-hidden { transform: translateY(-100%); }
   .nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--accent); text-decoration: none; }
   .nav-links { display: flex; gap: 1.5rem; list-style: none; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
@@ -91,6 +93,31 @@
     letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 10px; border-radius: 20px;
   }
+  .track-switcher { position: relative; }
+  .track-btn {
+    background: var(--eyebrow-bg); border: 1px solid var(--eyebrow-border);
+    color: var(--accent); font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 12px; border-radius: 20px;
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+    font-family: inherit; transition: background 0.15s;
+  }
+  .track-btn:hover { background: var(--eyebrow-border); }
+  .track-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 4px; min-width: 160px; z-index: 200;
+    display: none; flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .track-switcher.open .track-dropdown { display: flex; }
+  .track-dropdown a {
+    padding: 7px 12px; border-radius: 7px; color: var(--muted);
+    text-decoration: none; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.06em; transition: background 0.15s, color 0.15s; display: block;
+  }
+  .track-dropdown a:hover { background: var(--surface2); color: var(--text); }
+  .track-dropdown a.active { color: var(--accent); background: var(--eyebrow-bg); pointer-events: none; }
 
   /* 햄버거 메뉴 */
   .hamburger {
@@ -161,7 +188,7 @@
     padding: 5px 14px; border-radius: 20px; margin-bottom: 2rem;
   }
   .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
-  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 7vw, 5rem); line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+  h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 7vw, 5rem); line-height: 1.10; letter-spacing: 0.02em; margin-bottom: 1.5rem; }
   h1 .hl { color: var(--accent); }
   .hero-desc { font-size: 1.05rem; color: var(--text-desc); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.85; }
   .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -176,7 +203,7 @@
 
   .divider { border: none; border-top: 1px solid var(--border); margin: 3.5rem 0; }
 
-  .callout { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .callout { background: var(--surface); border: 1px solid var(--border2); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0 2.5rem 0; }
   .callout.warn { border-left-color: var(--accent3); }
   .callout.danger { border-left-color: var(--danger); }
   .callout.info { border-left-color: #5badff; }
@@ -184,7 +211,7 @@
   .callout p { margin: 0; font-size: 0.9rem; }
   .callout strong { color: var(--text); }
 
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0 2.5rem 0; }
   .card-grid.two-col { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 600px) { .card-grid.two-col { grid-template-columns: 1fr; } }
   .card { background: var(--surface); border: 1px solid var(--border2); border-radius: 12px; padding: 1.25rem; }
@@ -196,7 +223,7 @@
   .card h3 { font-size: 0.9rem; margin-bottom: 0.4rem; }
   .card p { font-size: 0.82rem; margin: 0; }
 
-  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 1.25rem 0; }
+  .code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: 1.25rem 0 2.5rem 0; }
   .code-header { padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .code-lang { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .code-dots { display: flex; gap: 5px; }
@@ -210,7 +237,7 @@
   .str { color: var(--accent3); }
   .prompt-sign { color: var(--accent2); }
 
-  .step-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin: 1.5rem 0; }
+  .step-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin: 1.5rem 0 2.5rem 0; }
   .step-item { display: flex; gap: 1rem; align-items: flex-start; }
   .step-num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--step-bg); border: 1px solid var(--step-border); color: var(--accent); font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
   .step-body { flex: 1; }
@@ -219,7 +246,7 @@
 
   code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: var(--code-bg); padding: 2px 7px; border-radius: 4px; color: var(--accent); }
 
-  .prompt-block { background: var(--surface2); border: 1px solid var(--border2); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; position: relative; }
+  .prompt-block { background: var(--surface2); border: 1px solid var(--border2); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0 2.5rem 0; position: relative; }
   .prompt-label { position: absolute; top: -10px; left: 16px; background: var(--surface2); border: 1px solid var(--border2); padding: 1px 10px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border-radius: 20px; }
   .prompt-text { font-size: 0.88rem; line-height: 1.85; color: var(--prompt-color); }
   .prompt-text strong { color: var(--accent3); font-weight: 700; }
@@ -236,7 +263,7 @@
   .cmd-cell.example { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
   .cmd-cell.head { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
-  .flow { display: flex; flex-direction: column; gap: 0; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .flow { display: flex; flex-direction: column; gap: 0; margin: 1.5rem 0 2.5rem 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   .flow-item { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border); background: var(--surface); }
   .flow-item:last-child { border-bottom: none; }
   .flow-step-num { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; background: var(--flow-step-bg); color: var(--accent); font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; }
@@ -249,7 +276,7 @@
   .mindset-card h3 { font-size: 0.9rem; margin-bottom: 0.4rem; color: var(--accent2); }
   .mindset-card p { font-size: 0.8rem; margin: 0; }
 
-  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0 2rem 0; }
   .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--checklist-color); }
   .checklist li::before { content: '$'; color: var(--accent); flex-shrink: 0; margin-top: 1px; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
 
@@ -294,7 +321,7 @@
     h1 { font-size: 2.5rem; }
     .nav-links, .nav-end { display: none; }
     .hamburger { display: flex; }
-    .nav { position: relative; }
+    .nav { position: sticky; }
   }
 </style>
 <script>(function(){var t=localStorage.getItem('vibe-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
@@ -310,9 +337,18 @@
     <li><a href="#mcp">MCP</a></li>
     <li><a href="#subagent">서브에이전트</a></li>
     <li><a href="#team">에이전트팀</a></li>
+    <li><a href="#testing">테스트</a></li>
+    <li><a href="#architecture">아키텍처</a></li>
   </ul>
   <div class="nav-end">
-    <span class="nav-badge">Advanced 트랙</span>
+    <div class="track-switcher" id="trackSwitcher">
+      <button class="track-btn" id="trackBtn" aria-haspopup="true" aria-expanded="false">Advanced ▾</button>
+      <div class="track-dropdown" role="menu">
+        <a href="/vibe-coding-beginner.html">Beginner</a>
+        <a href="/vibe-coding-intermediate.html">Intermediate</a>
+        <a href="/vibe-coding-advanced.html" class="active">Advanced</a>
+      </div>
+    </div>
     <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
   </div>
   <button class="hamburger" id="hamburgerBtn" aria-label="메뉴 열기">
@@ -327,6 +363,8 @@
     <li><a href="#mcp" class="menu-link">MCP</a></li>
     <li><a href="#subagent" class="menu-link">서브에이전트</a></li>
     <li><a href="#team" class="menu-link">에이전트팀</a></li>
+    <li><a href="#testing" class="menu-link">테스트</a></li>
+    <li><a href="#architecture" class="menu-link">아키텍처</a></li>
   </ul>
   <div class="mobile-menu-footer">
     <button class="theme-toggle" id="themeToggleMobile" aria-label="테마 전환"><span class="toggle-label">모드 변경</span>🌙</button>
@@ -353,6 +391,30 @@
 
 <main class="content">
 
+  <!-- Intermediate vs Advanced 구분 -->
+  <section class="section" id="distinction" style="margin-bottom:2rem;">
+    <div class="section-label">Advanced vs Intermediate</div>
+    <h2>무엇이 다른가요?</h2>
+    <p>둘의 차이는 "더 긴 프롬프트"나 "더 어려운 언어"가 아닙니다. 목표 자체가 다릅니다.</p>
+    <div class="card-grid two-col">
+      <div class="card">
+        <div class="card-icon blue">🔧</div>
+        <h3>Intermediate — 기능 완성</h3>
+        <p>앱이 동작하게 만드는 것. AI와 함께 기능을 구현하고, 버그를 고치고, 배포하는 것이 목표입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">🏗️</div>
+        <h3>Advanced — 시스템 품질</h3>
+        <p>앱이 올바르게, 안전하게, 확장 가능하게 동작하게 만드는 것. 성능, 보안, 아키텍처, 자동화 테스트가 목표입니다.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>핵심 전환:</strong> Intermediate에서는 "AI야, 이 기능 만들어줘"가 핵심이었다면, Advanced에서는 <strong>"AI야, 이 시스템을 더 좋게 만들어줘"</strong>가 핵심입니다. AI를 단순 구현 도구가 아니라 AI 오케스트레이터로 활용합니다.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
   <!-- 학습 경로 -->
   <div class="path-bar">
     <a class="path-step active" href="#claude-md">
@@ -378,6 +440,14 @@
     <a class="path-step" href="#team">
       <span class="path-step-num">06</span>
       Agent Team
+    </a>
+    <a class="path-step" href="#testing">
+      <span class="path-step-num">07</span>
+      Testing
+    </a>
+    <a class="path-step" href="#architecture">
+      <span class="path-step-num">08</span>
+      Architecture
     </a>
   </div>
 
@@ -910,6 +980,126 @@ Agent({
 
   <hr class="divider">
 
+  <!-- AI로 단위 테스트 작성하기 -->
+  <section class="section" id="testing">
+    <div class="section-label">07 — 품질 보증</div>
+    <h2>AI로 단위 테스트 작성하기</h2>
+    <p>Advanced의 핵심은 "앱이 동작한다"에서 "앱이 올바르게 동작한다"로 이동하는 것입니다. AI는 테스트 코드 작성을 매우 잘 합니다. 기능을 만든 직후 테스트를 바로 요청하는 습관을 들이세요.</p>
+
+    <div class="card-grid two-col">
+      <div class="card">
+        <div class="card-icon green">🧪</div>
+        <h3>왜 테스트인가?</h3>
+        <p>기능을 추가할 때마다 기존 기능이 깨지지 않았는지 자동으로 검증합니다. AI가 수정한 코드가 실제로 올바른지 확인하는 가장 확실한 방법입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon yellow">⚡</div>
+        <h3>AI가 잘하는 테스트</h3>
+        <p>함수 단위 테스트, 엣지케이스 생성, 경계값 테스트. "이 함수의 모든 엣지케이스 테스트 작성해줘"가 가장 효과적인 요청입니다.</p>
+      </div>
+    </div>
+
+    <h3>테스트 작성 요청 흐름</h3>
+    <div class="flow">
+      <div class="flow-item">
+        <div class="flow-step-num">1</div>
+        <div class="flow-content">
+          <strong>기능 구현 완료</strong>
+          <span>새 함수나 컴포넌트 구현 직후, AI에게 테스트를 요청합니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">2</div>
+        <div class="flow-content">
+          <strong>테스트 생성 요청</strong>
+          <span>"이 함수의 단위 테스트를 Vitest로 작성해줘. 정상 케이스 + 엣지케이스 포함"</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">3</div>
+        <div class="flow-content">
+          <strong>테스트 실행 및 검증</strong>
+          <span>npm run test로 실행하여 모든 테스트가 통과하는지 확인합니다</span>
+        </div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-step-num">4</div>
+        <div class="flow-content">
+          <strong>실패 테스트 → AI 수정 요청</strong>
+          <span>실패한 테스트 로그를 AI에게 전달해 코드 또는 테스트를 수정합니다</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <span class="prompt-label">테스트 생성 프롬프트</span>
+      <p class="prompt-text">
+        아래 함수의 <strong>단위 테스트를 Vitest로</strong> 작성해줘.<br><br>
+        포함해야 할 것:<br>
+        <em>1. 정상 동작 케이스 (happy path)</em><br>
+        <em>2. 빈 값·null 입력 처리</em><br>
+        <em>3. 경계값 (예: 빈 배열, 최댓값)</em><br>
+        <em>4. 예외가 발생해야 하는 케이스</em><br><br>
+        함수 코드: [코드 붙여넣기]
+      </p>
+    </div>
+
+    <div class="callout success">
+      <p><strong>팁:</strong> <code>/test-gen</code> 스킬을 만들어두면 테스트 생성이 슬래시 한 번으로 끝납니다. 스킬 섹션(03)에서 배운 내용을 테스트 자동화에 적용해보세요.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 아키텍처 패턴 -->
+  <section class="section" id="architecture">
+    <div class="section-label">08 — 코드 품질</div>
+    <h2>AI와 함께 아키텍처 개선하기</h2>
+    <p>코드가 동작하는 것과 코드가 좋은 것은 다릅니다. AI는 코드 리팩토링과 아키텍처 개선에 탁월합니다. "동작하는 코드"를 "유지보수 가능한 코드"로 만드는 방법을 배워봅니다.</p>
+
+    <div class="card-grid two-col">
+      <div class="card">
+        <div class="card-icon green">🏛️</div>
+        <h3>단일 책임 원칙 (SRP)</h3>
+        <p>하나의 함수·컴포넌트는 하나의 역할만. AI에게 "이 컴포넌트가 너무 많은 일을 하고 있어, 분리해줘"라고 요청하세요.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">🎨</div>
+        <h3>컴포넌트 분리 (MVC)</h3>
+        <p>데이터(Model), 화면(View), 로직(Controller)을 분리합니다. AI에게 "이 파일을 MVC 패턴으로 리팩토링해줘"라고 요청하세요.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon yellow">🔒</div>
+        <h3>보안 리뷰</h3>
+        <p>AI에게 "이 코드의 보안 취약점을 찾아줘"를 주기적으로 요청하세요. XSS, SQL 인젝션, 환경변수 노출 등을 자동으로 점검합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon red">⚡</div>
+        <h3>성능 최적화</h3>
+        <p>"이 컴포넌트에서 불필요한 리렌더링이 있는지 확인해줘"처럼 성능 분석을 AI에게 요청할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="prompt-block">
+      <span class="prompt-label">아키텍처 리뷰 프롬프트</span>
+      <p class="prompt-text">
+        아래 코드를 <strong>SOLID 원칙 관점</strong>에서 리뷰해줘.<br><br>
+        특히 확인해줘:<br>
+        <em>1. 단일 책임 원칙 위반 여부 (너무 많은 역할을 하는 함수)</em><br>
+        <em>2. 재사용 가능한 컴포넌트로 분리할 수 있는 부분</em><br>
+        <em>3. 보안 취약점 (환경변수, API 키 노출, XSS 위험)</em><br><br>
+        리뷰 후 <strong>개선된 버전의 코드</strong>도 작성해줘.<br>
+        코드: [코드 붙여넣기]
+      </p>
+    </div>
+
+    <div class="callout warn">
+      <p><strong>주의:</strong> 아키텍처 리팩토링은 기능을 바꾸지 않으면서 구조를 개선하는 작업입니다. 리팩토링 전후에 반드시 테스트를 실행해서 기능이 그대로인지 확인하세요. Git 커밋도 잊지 마세요.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
   <!-- 마스터 로드맵 -->
   <section class="section">
     <div class="section-label">마무리</div>
@@ -960,7 +1150,7 @@ Agent({
 </main>
 
 <div class="bottom-nav">
-  <a href="vibe-coding-intermediate.html" class="btn-back">← Intermediate 트랙</a>
+  <a href="vibe-coding-intermediate.html" class="btn-back">← Intermediate</a>
   <a href="vibe-coding-index.html" class="btn-home">처음으로 돌아가기</a>
 </div>
 
@@ -1010,7 +1200,7 @@ Agent({
 
   // Scroll-spy: path-bar active step follows scroll position
   (function() {
-    const sectionIds = ['claude-md', 'plugin', 'skill', 'mcp', 'subagent', 'team'];
+    const sectionIds = ['claude-md', 'plugin', 'skill', 'mcp', 'subagent', 'team', 'testing', 'architecture'];
     const steps = document.querySelectorAll('.path-step');
 
     const observer = new IntersectionObserver((entries) => {
@@ -1029,6 +1219,26 @@ Agent({
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
+  })();
+
+  // track switcher dropdown
+  const ts = document.getElementById('trackSwitcher'), tb = document.getElementById('trackBtn');
+  if (ts && tb) {
+    tb.addEventListener('click', function(e) { e.stopPropagation(); const o = ts.classList.toggle('open'); tb.setAttribute('aria-expanded', String(o)); });
+    document.addEventListener('click', function() { ts.classList.remove('open'); tb.setAttribute('aria-expanded', 'false'); });
+  }
+
+  // scroll-hide nav
+  (function(){
+    const navEl = document.querySelector('.nav');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < 80) { navEl.classList.remove('nav-hidden'); }
+      else if (y > lastY) { navEl.classList.add('nav-hidden'); mobileMenu.classList.remove('open'); hamburgerBtn.classList.remove('open'); }
+      else { navEl.classList.remove('nav-hidden'); }
+      lastY = y;
+    }, { passive: true });
   })();
 </script>
 </body>
