@@ -14,7 +14,7 @@
     --border2: rgba(0,0,0,0.08);
     --text: #0d0d0d;
     --muted: #888888;
-    --accent: #8a6200;
+    --accent: #D4A017;
     --accent2: #006b87;
     --green: #0e7a3e;
     --pink: #b52e6b;
@@ -88,7 +88,9 @@
     padding: 0 2rem;
     display: flex; align-items: center; justify-content: space-between;
     height: 56px;
+    transition: transform 0.3s ease;
   }
+  .nav-hidden { transform: translateY(-100%); }
   .nav-brand {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.3rem; letter-spacing: 0.1em; color: var(--accent);
@@ -103,6 +105,31 @@
     font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
     padding: 3px 10px; border-radius: 20px;
   }
+  .track-switcher { position: relative; }
+  .track-btn {
+    background: var(--eyebrow-bg); border: 1px solid var(--eyebrow-border);
+    color: var(--accent); font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 12px; border-radius: 20px;
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+    font-family: inherit; transition: background 0.15s;
+  }
+  .track-btn:hover { background: var(--eyebrow-border); }
+  .track-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 4px; min-width: 160px; z-index: 200;
+    display: none; flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .track-switcher.open .track-dropdown { display: flex; }
+  .track-dropdown a {
+    padding: 7px 12px; border-radius: 7px; color: var(--muted);
+    text-decoration: none; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.06em; transition: background 0.15s, color 0.15s; display: block;
+  }
+  .track-dropdown a:hover { background: var(--surface2); color: var(--text); }
+  .track-dropdown a.active { color: var(--accent); background: var(--eyebrow-bg); pointer-events: none; }
 
   .hero {
     padding: 6rem 2rem 4rem;
@@ -120,7 +147,7 @@
   h1 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.8rem, 7vw, 5rem);
-    line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem;
+    line-height: 1.10; letter-spacing: 0.02em; margin-bottom: 1.5rem;
   }
   h1 .hl { color: var(--accent); }
   .hero-desc { font-size: 1.05rem; color: var(--text-desc); max-width: 600px; margin-bottom: 2.5rem; line-height: 1.85; }
@@ -290,11 +317,68 @@
   .theme-toggle:hover { color: var(--text); border-color: var(--border2); }
   .nav-end { display: flex; align-items: center; gap: 0.75rem; }
 
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+    width: 36px; height: 36px;
+    background: none; border: 1px solid var(--border2);
+    border-radius: 8px; cursor: pointer; flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+  .hamburger span {
+    display: block; width: 16px; height: 1.5px;
+    background: var(--muted); border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s, background 0.2s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: absolute; top: 56px; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 0.5rem 1rem 0 0;
+    padding: 0.75rem 1.25rem 1rem;
+    flex-direction: column; gap: 0;
+    z-index: 99;
+    width: max-content; min-width: 9rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+  .mobile-menu ul li a {
+    display: block; padding: 0.6rem 0;
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s; white-space: nowrap;
+  }
+  .mobile-menu ul li:last-child a { border-bottom: none; }
+  .mobile-menu ul li a:hover { color: var(--text); }
+  .mobile-menu-footer {
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-top: 0.75rem;
+  }
+  #themeToggleMobile {
+    width: auto; padding: 0 0.75rem; gap: 0.45rem;
+  }
+  #themeToggleMobile .toggle-label {
+    color: var(--muted); font-size: 0.82rem;
+    white-space: nowrap; transition: color 0.2s;
+  }
+  #themeToggleMobile:hover .toggle-label { color: var(--text); }
+
   @media (max-width: 600px) {
     .hero { padding: 4rem 1.25rem 2.5rem; }
     .content { padding: 0 1.25rem 4rem; }
     .compare-row { grid-template-columns: 1fr; }
     h1 { font-size: 2.5rem; }
+    .nav-links, .nav-end { display: none; }
+    .hamburger { display: flex; }
+    .nav { position: sticky; }
   }
 </style>
 <script>(function(){var t=localStorage.getItem('vibe-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
@@ -308,20 +392,45 @@
     <li><a href="#project">프로젝트</a></li>
     <li><a href="#dev">개발하기</a></li>
     <li><a href="#deploy">배포</a></li>
+    <li><a href="#anatomy">코드읽기</a></li>
+    <li><a href="#next-level">다음단계</a></li>
   </ul>
   <div class="nav-end">
-    <span class="nav-badge">무료 트랙</span>
+    <div class="track-switcher" id="trackSwitcher">
+      <button class="track-btn" id="trackBtn" aria-haspopup="true" aria-expanded="false">BEGINNER ▾</button>
+      <div class="track-dropdown" role="menu">
+        <a href="/vibe-coding-beginner.html" class="active">Beginner</a>
+        <a href="/vibe-coding-intermediate.html">Intermediate</a>
+        <a href="/vibe-coding-advanced.html">Advanced</a>
+      </div>
+    </div>
     <button class="theme-toggle" id="themeToggle" aria-label="테마 전환">🌙</button>
   </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="메뉴 열기">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#setup" class="menu-link">환경설정</a></li>
+    <li><a href="#project" class="menu-link">프로젝트</a></li>
+    <li><a href="#dev" class="menu-link">개발하기</a></li>
+    <li><a href="#deploy" class="menu-link">배포</a></li>
+    <li><a href="#anatomy" class="menu-link">코드읽기</a></li>
+    <li><a href="#next-level" class="menu-link">다음단계</a></li>
+  </ul>
+  <div class="mobile-menu-footer">
+    <button class="theme-toggle" id="themeToggleMobile" aria-label="테마 전환"><span class="toggle-label">모드 변경</span>🌙</button>
+  </div>
+</div>
 
 <section class="hero">
-  <div class="hero-eyebrow">Track 01 — 무료 사용자</div>
-  <h1>채팅으로<br><span class="hl">앱 만들기</span></h1>
+  <div class="hero-eyebrow">Track 01 — Beginner</div>
+  <h1>채팅으로<br><span class="hl">앱 만들어보기</span></h1>
   <p class="hero-desc">
     ChatGPT나 Claude 무료 버전으로도 충분히 웹 앱을 만들 수 있어요.
-    AI가 써준 코드를 복사해서 붙여넣는 방식이지만, 처음 배우기엔 오히려 더 좋습니다.
-    코드 구조를 눈으로 직접 확인하면서 배울 수 있거든요.
+    <br><strong style="color:var(--accent)">AI는 주니어 개발자이고, 당신은 프로젝트 디렉터입니다.</strong>
+    <br>그러니 결과를 검토하고, 필요한 수정을 AI에게 요청하는 역할을 맡아주세요.
   </p>
   <div class="hero-tags">
     <span class="tag">ChatGPT Free</span>
@@ -338,8 +447,9 @@
   <!-- 전체 흐름 -->
   <section class="section" id="flow">
     <div class="section-label">전체 흐름 이해</div>
-    <h2>무료 트랙에서는 이렇게 해요</h2>
-    <p>유료 도구는 AI가 내 파일을 직접 열어서 고쳐줍니다. 무료 트랙에서는 내가 중간 역할을 합니다. AI에게 코드를 받아서, 내가 파일에 붙여넣는 방식이에요.</p>
+    <h2>흐름은 다음과 같아요</h2>
+    <p>유료 도구들은 AI가 내 파일을 직접 열어서 작업하지만, 초심자 트랙에서는 중간 역할이 필요합니다.
+      <br>AI에게 코드를 받아서, 내가 파일에 붙여넣는 방식이에요.</p>
 
     <div class="flow">
       <div class="flow-item">
@@ -387,7 +497,8 @@
     </div>
 
     <div class="callout info">
-      <p><strong>오히려 장점이 있어요:</strong> AI가 직접 파일을 고쳐주면 뭘 바꿨는지 놓치기 쉽습니다. 무료 방식은 코드를 직접 눈으로 보면서 붙여넣기 때문에, 구조를 자연스럽게 익히게 됩니다. 입문자에게는 오히려 더 좋은 방식일 수 있어요.</p>
+      <p><strong>장점도 있어요!
+        <br></strong> AI가 직접 파일을 고쳐주면 뭘 바꿨는지 놓치기 쉽습니다. 초심자의 방식은 코드를 직접 눈으로 보면서 붙여넣기 때문에, 구조를 자연스럽게 익히게 됩니다. 입문자에게는 오히려 더 좋은 방식일 수 있어요.</p>
     </div>
   </section>
 
@@ -396,8 +507,9 @@
   <!-- 환경 설정 -->
   <section class="section" id="setup">
     <div class="section-label">Step 1 — 환경 설정</div>
-    <h2>처음 한 번만 설치하면 끝</h2>
-    <p>아래 도구들을 설치하면 개발 환경 준비가 완료됩니다. 한 번 설치하면 앞으로 모든 프로젝트에서 계속 쓸 수 있어요.</p>
+    <h2>처음 한 번만 설정하면 끝</h2>
+    <p>아래 도구들을 설치하면 개발 환경 준비가 완료됩니다. 
+      <br>이후 모든 프로젝트에서 계속 쓸 수 있어요.</p>
 
     <div class="card-grid">
       <div class="card">
@@ -417,7 +529,7 @@
       </div>
       <div class="card">
         <div class="card-icon green">🌐</div>
-        <h3>GitHub + Vercel</h3>
+        <h3>GitHub + Vercel 가입하기</h3>
         <p>코드 저장(GitHub)과 인터넷 배포(Vercel). 둘 다 무료 계정으로 충분합니다.</p>
       </div>
     </div>
@@ -511,26 +623,28 @@
     <h3>첫 번째 요청 — 이렇게 시작해보세요</h3>
     <p>ChatGPT나 Claude 채팅창에 아래와 같은 형식으로 요청하면 됩니다.</p>
 
+    <div class="callout warn">
+      <p><strong>프로젝트 디렉터처럼 요청하세요:</strong> "할 일 앱 만들어줘"가 아니라 먼저 요구사항을 정의하고, 그 다음 AI에게 구현을 맡기세요. AI는 방향이 있을 때 훨씬 정확하게 일합니다.</p>
+    </div>
+
     <div class="prompt-block">
-      <div class="prompt-label">💬 AI에게 이렇게 요청하기 (예시: 할 일 목록 앱)</div>
+      <div class="prompt-label">💬 요구사항 정의 → 구현 요청 (예시: 할 일 목록 앱)</div>
       <div class="prompt-text">
+        <strong>[요구사항 정의]</strong><br>
         나는 React + Vite 프로젝트를 방금 만든 입문자야.<br>
-        <strong>할 일 목록(Todo) 앱</strong>을 만들고 싶어.<br><br>
+        <strong>할 일 목록(Todo) 앱</strong>의 요구사항을 먼저 정리할게:<br><br>
 
-        기능:<br>
-        - 입력창에 할 일을 입력하고 추가 버튼을 누르면 목록에 추가<br>
-        - 각 항목마다 완료 체크박스와 삭제 버튼<br>
-        - 완료된 항목은 취소선으로 표시<br><br>
+        사용자: 나 혼자 쓸 앱<br>
+        핵심 기능 3가지:<br>
+        1. 입력창에 할 일 입력 + 추가 버튼<br>
+        2. 각 항목에 완료 체크박스와 삭제 버튼<br>
+        3. 완료 항목은 취소선으로 표시<br><br>
 
-        조건:<br>
-        - <strong>src/App.jsx 파일 하나</strong>에 전부 담아줘<br>
-        - CSS는 인라인 스타일로 간단하게 넣어줘<br>
-        - 전체 코드를 한 번에 다 출력해줘<br><br>
-
-        코드를 주고 나서 마지막에:<br>
-        1. 어떤 파일에 붙여넣어야 하는지<br>
-        2. 코드가 어떻게 동작하는지 한 줄 요약<br>
-        을 알려줘.
+        <strong>[구현 요청]</strong><br>
+        위 요구사항으로 <strong>src/App.jsx 파일 하나</strong>에 구현해줘.<br>
+        - CSS는 인라인 스타일로 간단하게<br>
+        - 전체 코드를 한 번에 출력<br>
+        - 완료 후: 어느 파일에 넣는지 + 동작 방식 한 줄 요약
       </div>
     </div>
 
@@ -804,6 +918,136 @@
 
   <hr class="divider">
 
+  <!-- 코드 해부학 -->
+  <section class="section" id="anatomy">
+    <div class="section-label">코드 해부학</div>
+    <h2>AI가 쓴 코드, 어떻게 읽나요?</h2>
+    <p>코드를 직접 쓸 줄 몰라도 됩니다. 하지만 AI가 만들어준 코드의 구조는 눈으로 파악할 수 있어야 합니다. 이 세 가지만 알면 Intermediate로 넘어갈 준비가 됩니다.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon yellow">📦</div>
+        <h3>변수 (Variable)</h3>
+        <p>정보를 담는 상자입니다. <code>const</code>나 <code>let</code>이 보이면 변수입니다. <code>const name = "홍길동"</code>처럼 값에 이름을 붙여 저장합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">⚙️</div>
+        <h3>함수 (Function)</h3>
+        <p>반복되는 동작을 묶어둔 것입니다. <code>function</code> 또는 화살표 <code>=&gt;</code>가 보이면 함수입니다. 특정 이름으로 불러서 실행합니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon pink">🔴</div>
+        <h3>오류 메시지 (Error)</h3>
+        <p>빨간 글씨로 나타납니다. 보통 <code>TypeError</code>, <code>ReferenceError</code>처럼 시작하고, 뒤에 원인과 파일·줄 번호가 나옵니다. AI에게 그대로 넘기면 됩니다.</p>
+      </div>
+    </div>
+
+    <h3>코드 한 토막 읽어보기</h3>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-lang">읽기 연습 — App.jsx (할 일 앱 일부)</span>
+      </div>
+      <pre><span class="comment">// 변수: todos라는 빈 배열(목록)을 선언</span>
+<span class="cmd">const</span> [todos, setTodos] = useState([])
+
+<span class="comment">// 함수: "추가" 버튼 클릭 시 할 일을 목록에 넣는 동작 정의</span>
+<span class="cmd">function</span> addTodo(text) {
+  setTodos([...todos, { text, done: false }])
+}
+
+<span class="comment">// 화면: todos 배열을 li 태그로 하나씩 출력</span>
+todos.<span class="cmd">map</span>(todo =&gt; &lt;li&gt;{todo.text}&lt;/li&gt;)</pre>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 팁:</strong> 코드를 전부 이해할 필요가 없습니다. "이 부분이 화면, 이 부분이 클릭 동작, 이 부분이 데이터" 정도만 파악하면 됩니다. 더 알고 싶은 부분은 AI에게 "이 코드에서 버튼 색상 바꾸는 부분이 어디야?"라고 물어보세요.
+    </div>
+
+    <div class="callout info">
+      <p><strong>Context is King:</strong> Intermediate 트랙부터는 파일이 여러 개로 나뉩니다. AI에게 요청할 때 "어느 파일을 수정하는지"를 항상 명시하는 습관이 중요해집니다. 지금부터 파일 이름을 신경 써서 보세요.</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 바이브가 실패할 때 -->
+  <section class="section" id="failure">
+    <div class="section-label">바이브가 실패할 때</div>
+    <h2>AI가 엉뚱한 걸 만들었을 때</h2>
+    <p>AI가 항상 원하는 결과를 내주지는 않습니다. 두 가지 상황이 자주 발생합니다. 당황하지 말고 아래 정정 프롬프트를 사용하세요.</p>
+
+    <h3>상황 1 — 존재하지 않는 라이브러리를 사용했을 때</h3>
+    <p>AI가 실제로 없는 패키지 이름이나 함수를 코드에 넣는 경우가 있습니다. <code>npm install</code> 시 "not found" 오류가 나거나 함수 호출 시 <code>undefined</code> 오류가 나면 의심해보세요.</p>
+
+    <div class="compare-row">
+      <div class="compare-bad">
+        <div class="compare-label">❌ AI가 만든 문제 코드</div>
+        <code>import &#123; magicSort &#125; from 'react-magic-tools'</code><br><br>
+        → npm install 해도 "Package not found" 오류 발생
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ 정정 프롬프트</div>
+        "react-magic-tools 라이브러리가 실제로 존재하지 않는 것 같아. npm에서 찾을 수 없어. 이 기능을 구현하는 <strong>실제로 존재하는</strong> 라이브러리를 사용하거나, 라이브러리 없이 직접 구현해줘."
+      </div>
+    </div>
+
+    <h3>상황 2 — 요청한 것과 다른 기능을 만들었을 때</h3>
+    <div class="compare-row">
+      <div class="compare-bad">
+        <div class="compare-label">❌ 이렇게 정정하면 안 됨</div>
+        "아니야, 다시 해줘."<br><br>
+        → AI가 무엇이 틀렸는지 모름. 같은 실수 반복.
+      </div>
+      <div class="compare-good">
+        <div class="compare-label">✅ 구체적 정정 프롬프트</div>
+        "삭제 버튼이 클릭한 항목 <strong>하나만</strong> 지워야 하는데, 지금 코드는 전체 목록을 지우고 있어. 해당 인덱스의 항목만 제거하도록 수정해줘. 현재 코드: [코드 붙여넣기]"
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 디버거 마인드셋:</strong> AI가 틀렸을 때 "AI가 못하는구나"가 아니라 "내가 더 구체적으로 설명해야겠구나"로 생각하세요. 리드 개발자는 주니어에게 더 명확한 지시를 내립니다.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 레벨 1.5 체크리스트 -->
+  <section class="section" id="next-level">
+    <div class="section-label">레벨 1.5 — 다음 단계 준비</div>
+    <h2>Intermediate로 넘어가기 전에</h2>
+    <p>이 페이지의 방식(복붙 개발)에 익숙해졌다면, 다음 단계를 준비할 시간입니다. Intermediate 트랙은 AI가 파일을 직접 수정하는 환경입니다. 아래를 모두 경험해야 다음 단계가 수월합니다.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon yellow">🎓</div>
+        <h3>졸업 프로젝트</h3>
+        <p>AI가 만든 코드에서 <strong style="color:var(--text)">딱 한 줄</strong>을 직접 수정해보세요. 버튼 색상 하나, 텍스트 하나. 저장하고 브라우저에서 변화를 확인하면 졸업입니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon blue">⚙️</div>
+        <h3>도구 설치</h3>
+        <p>Cursor 설치 완료. Git 로그인 완료. 터미널에서 <code>node -v</code>와 <code>git --version</code> 모두 확인 완료.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon green">🌐</div>
+        <h3>배포 경험</h3>
+        <p>만든 프로젝트를 Vercel에 한 번이라도 배포해보세요. <code>내프로젝트.vercel.app</code> URL이 생기고 친구에게 공유해보면 됩니다.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon pink">🔍</div>
+        <h3>오류 해결 경험</h3>
+        <p>오류 메시지를 AI에게 넘겨서 해결해본 경험이 있으면 됩니다. 오류는 실패가 아니라 개발 과정의 일부입니다.</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <p><strong>다음 단계 예고:</strong> Intermediate 트랙에서는 Cursor로 AI가 직접 파일을 수정합니다. 더 빠르고 강력하지만, <strong>"AI가 뭘 바꿨는지 직접 확인"</strong>하는 리뷰어 역할이 더 중요해집니다. 준비되셨나요?</p>
+    </div>
+  </section>
+
+  <hr class="divider">
+
   <!-- 핵심 원칙 -->
   <section class="section">
     <div class="section-label">핵심 원칙</div>
@@ -860,14 +1104,30 @@
 <script>
 document.addEventListener('DOMContentLoaded',function(){
   var btn=document.getElementById('themeToggle');
-  function sync(){var d=document.documentElement.getAttribute('data-theme')==='dark';btn.textContent=d?'☀':'🌙';}
-  sync();
-  btn.addEventListener('click',function(){
-    var d=document.documentElement.getAttribute('data-theme')==='dark';
-    if(d){document.documentElement.removeAttribute('data-theme');localStorage.setItem('vibe-theme','light');}
-    else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('vibe-theme','dark');}
-    sync();
-  });
+  var ts=document.getElementById('trackSwitcher'),tb=document.getElementById('trackBtn');
+  if(ts&&tb){
+    tb.addEventListener('click',function(e){e.stopPropagation();var o=ts.classList.toggle('open');tb.setAttribute('aria-expanded',String(o));});
+    document.addEventListener('click',function(){ts.classList.remove('open');tb.setAttribute('aria-expanded','false');});
+  }
+  var btnM=document.getElementById('themeToggleMobile');
+  function syncAll(){var d=document.documentElement.getAttribute('data-theme')==='dark';var icon=d?'☀':'🌙';btn.textContent=icon;if(btnM){var last=btnM.childNodes[btnM.childNodes.length-1];if(last&&last.nodeType===3)last.textContent=icon;else btnM.textContent=icon;}}
+  syncAll();
+  function toggleTheme(){var d=document.documentElement.getAttribute('data-theme')==='dark';if(d){document.documentElement.removeAttribute('data-theme');localStorage.setItem('vibe-theme','light');}else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('vibe-theme','dark');}syncAll();}
+  btn.addEventListener('click',toggleTheme);
+  if(btnM)btnM.addEventListener('click',toggleTheme);
+  var hamburgerBtn=document.getElementById('hamburgerBtn'),mobileMenu=document.getElementById('mobileMenu');
+  if(hamburgerBtn&&mobileMenu){
+    hamburgerBtn.addEventListener('click',function(){var o=mobileMenu.classList.toggle('open');hamburgerBtn.classList.toggle('open',o);});
+    document.querySelectorAll('.menu-link').forEach(function(l){l.addEventListener('click',function(){mobileMenu.classList.remove('open');hamburgerBtn.classList.remove('open');});});
+  }
+  var _nav=document.querySelector('.nav'),_lastY=0;
+  window.addEventListener('scroll',function(){
+    var y=window.scrollY;
+    if(y<80){_nav.classList.remove('nav-hidden');}
+    else if(y>_lastY){_nav.classList.add('nav-hidden');if(mobileMenu)mobileMenu.classList.remove('open');if(hamburgerBtn)hamburgerBtn.classList.remove('open');}
+    else{_nav.classList.remove('nav-hidden');}
+    _lastY=y;
+  },{passive:true});
 });
 </script>
 </body>
