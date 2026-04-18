@@ -639,7 +639,7 @@
 
 <!-- QUIZ -->
 <section class="quiz-section">
-  <div class="section-label">트랙 고르기 헷갈리면</div>
+  <div class="section-label">트랙을 고르기 어렵다면</div>
   <h2 class="desktop">지금 내 방식에 더 가까운 쪽을 골라보세요</h2>
   <h2 class="mobile">내 방식은 어땠지?</h2>
   <p style="max-width:600px">
@@ -744,6 +744,62 @@ document.addEventListener('DOMContentLoaded',function(){
     sync();
   });
 });
+
+// Section scroll snap
+(function(){
+  var sections = Array.from(document.querySelectorAll('section'));
+  var NAV_H = 56;
+  var DURATION = 850;
+  var currentIndex = 0;
+  var isAnimating = false;
+
+  function getCurrentIndex() {
+    var mid = window.scrollY + NAV_H + 20;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      var top = sections[i].getBoundingClientRect().top + window.scrollY;
+      if (mid >= top) return i;
+    }
+    return 0;
+  }
+
+  function goTo(index) {
+    if (isAnimating) return;
+    if (index < 0 || index >= sections.length) return;
+    isAnimating = true;
+    currentIndex = index;
+    var top = sections[index].getBoundingClientRect().top + window.scrollY - NAV_H;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    setTimeout(function(){ isAnimating = false; }, DURATION);
+  }
+
+  window.addEventListener('wheel', function(e){
+    e.preventDefault();
+    if (isAnimating) return;
+    currentIndex = getCurrentIndex();
+    goTo(currentIndex + (e.deltaY > 0 ? 1 : -1));
+  }, { passive: false });
+
+  var touchStartY = 0;
+  window.addEventListener('touchstart', function(e){
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', function(e){
+    if (isAnimating) return;
+    var diff = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(diff) > 40) {
+      currentIndex = getCurrentIndex();
+      goTo(currentIndex + (diff > 0 ? 1 : -1));
+    }
+  }, { passive: true });
+
+  window.addEventListener('keydown', function(e){
+    if (isAnimating) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); currentIndex = getCurrentIndex(); goTo(currentIndex + 1); }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); currentIndex = getCurrentIndex(); goTo(currentIndex - 1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(sections.length - 1); }
+  });
+})();
 </script>
 </body>
 </html>
