@@ -8,6 +8,13 @@
 AI 코딩 툴을 처음 접하는 사람, 써봤지만 워크플로우가 정착되지 않은 사람을 위한 **구조화된 학습 흐름 가이드**입니다.
 
 → **[vibecodingv2.vercel.app](https://vibecodingv2.vercel.app/)**
+<img width="1883" height="837" alt="image" src="https://github.com/user-attachments/assets/d674d62c-89dc-431e-ad3c-07308aa76436" />
+<img width="1892" height="851" alt="image" src="https://github.com/user-attachments/assets/466760d0-b9f4-4f3a-96fe-5df3d3097457" />
+<img width="1893" height="865" alt="image" src="https://github.com/user-attachments/assets/0e800585-c187-4cc9-80fe-0b5a1252746c" />
+<img width="1895" height="863" alt="image" src="https://github.com/user-attachments/assets/52df0a84-4046-42ae-a483-de729c8ac5d8" />
+
+
+
 
 ---
 
